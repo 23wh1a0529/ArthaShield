@@ -511,7 +511,7 @@ ArthaShield uses a **multi-signal parametric trigger system** designed for accur
 
 ---
 
-## 🚨 10. Adversarial Defense & Anti-Spoofing Strategy
+## 🚨 7. Adversarial Defense & Anti-Spoofing Strategy
 
 ### ⚠️ Market Reality
 
@@ -621,7 +621,7 @@ We implement a **risk-based decision system**:
 ---
 
 
-## 🏗️ 6. Tech Stack & Development Plan
+## 🏗️ 8. Tech Stack & Development Plan
 
 ArthaShield is designed as a **real-time, event-driven system** capable of detecting disruptions, validating income impact, and executing payouts within seconds.
 
@@ -719,7 +719,7 @@ ArthaShield is designed as a **real-time, event-driven system** capable of detec
 
 
 
-## 🏆 11. Why ArthaShield Wins
+## 🏆 9. Why ArthaShield Wins
 
 ### 🔍 At a Glance
 
