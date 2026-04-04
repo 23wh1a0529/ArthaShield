@@ -1,0 +1,783 @@
+You are building ArthaShield — a stunning, production-grade insurtech web app for a hackathon. Every pixel matters. Every interaction must feel alive. This is NOT a template. This is NOT a dashboard boilerplate. Build something that makes judges stop scrolling.
+Read every word of this prompt before writing a single line of code.
+═══════════════════════════════════════════════════════════
+ABSOLUTE RULES — VIOLATING THESE = REBUILD FROM SCRATCH
+═══════════════════════════════════════════════════════════
+
+NO plain white or gray backgrounds anywhere
+NO boring card grids with no life
+NO missing logout / navigation between pages
+EVERY page must have a working navbar with navigation
+EVERY number must count up with animation
+EVERY button must have hover + click effects
+ALL pages must be reachable from ALL other pages
+The trigger simulation MUST show a step-by-step animated sequence
+Switching hub from Koramangala to Whitefield MUST show different premium (₹49 vs ₹28)
+Mobile responsive — every page works on 375px
+
+═══════════════════════════════════════════════════════════
+TECH STACK
+═══════════════════════════════════════════════════════════
+Frontend only (no backend needed for Replit demo):
+
+React 18 + Vite
+Tailwind CSS
+Framer Motion (ALL animations)
+React Router DOM (ALL navigation)
+Recharts (for admin charts)
+Lucide React (icons)
+
+All data is mock/hardcoded in a data.js file.
+No backend, no API calls, no axios needed.
+Everything runs client-side for instant Replit deployment.
+═══════════════════════════════════════════════════════════
+COLOR SYSTEM — USE EXACTLY THESE
+═══════════════════════════════════════════════════════════
+:root {
+--bg-primary: #06060F;        /* Near black with blue tint /
+--bg-card: #0D0D1A;           / Card background /
+--bg-card-hover: #12122A;     / Card hover /
+--purple: #7C3AED;            / Primary purple /
+--purple-light: #A855F7;      / Light purple /
+--teal: #14B8A6;              / Primary teal /
+--teal-bright: #00FFD1;       / Electric teal for numbers /
+--gold: #F59E0B;              / Warning / amber /
+--coral: #F43F5E;             / Danger /
+--success: #10B981;           / Green success /
+--text-primary: #F8FAFC;      / White text /
+--text-secondary: #94A3B8;    / Muted text /
+--border: rgba(124, 58, 237, 0.2); / Purple border */
+--glow-purple: 0 0 30px rgba(124,58,237,0.4);
+--glow-teal: 0 0 30px rgba(20,184,166,0.4);
+}
+GRADIENT TEXT (apply to all headings):
+background: linear-gradient(135deg, #A855F7 0%, #14B8A6 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
+CARD STYLE (apply to all cards):
+background: #0D0D1A;
+border: 1px solid rgba(124,58,237,0.2);
+border-radius: 16px;
+transition: all 0.3s ease;
+CARD HOVER:
+border-color: rgba(124,58,237,0.6);
+box-shadow: 0 0 30px rgba(124,58,237,0.2);
+transform: translateY(-4px);
+═══════════════════════════════════════════════════════════
+GLOBAL NAVBAR — APPEARS ON EVERY PAGE
+═══════════════════════════════════════════════════════════
+Fixed top navbar, height 64px.
+Background: rgba(6,6,15,0.8) with backdrop-filter: blur(20px).
+Border bottom: 1px solid rgba(124,58,237,0.2).
+LEFT: Shield emoji + "ArthaShield" in gradient text, bold 20px.
+Clicking logo goes to /home.
+CENTER (desktop only): nav links
+Home | Dashboard | Simulate | Admin
+Each link: white text, hover → teal color + underline animation
+Active link: teal color + thin teal underline
+RIGHT:
+If not logged in: "Get Protected" button (purple gradient)
+If logged in (after onboarding):
+Show "👤 Ravi Kumar" text + "Logout" button
+Logout → clears localStorage → goes to /home
+Show coverage badge: green dot + "ACTIVE"
+MOBILE: hamburger menu → slide-down menu with all links
+═══════════════════════════════════════════════════════════
+PAGE 1: SPLASH SCREEN (/splash)
+═══════════════════════════════════════════════════════════
+Auto-redirects to /home after 3 seconds. Skip button bottom right.
+BACKGROUND:
+Full screen #06060F.
+Animated background: 3 blobs slowly drifting.
+Blob 1: purple, top-left, opacity 0.15, blur 80px, size 400px
+Blob 2: teal, bottom-right, opacity 0.1, blur 100px, size 300px
+Blob 3: purple, center, opacity 0.08, blur 60px, size 200px
+All blobs animate: translateX and translateY slowly over 8-12 seconds, looping.
+CENTER CONTENT (vertically and horizontally centered):
+SHIELD ICON:
+Width 120px, height 140px SVG shield.
+Gradient fill: top #7C3AED → bottom #14B8A6.
+CSS animation: rotateY from -20deg to 20deg over 3s ease-in-out infinite alternate.
+Also: gentle float — translateY -10px to 10px over 4s infinite alternate.
+Drop shadow: 0 0 60px rgba(124,58,237,0.6).
+Below shield (appear with fade-in, 0.5s delay after shield):
+"ArthaShield" — 48px, bold, gradient text, letter-spacing -1px.
+Below name (appear 1s delay, typewriter effect):
+"Protect your livelihood, not just your life"
+Font size: 18px, color: #94A3B8.
+Typewriter: reveal one character every 50ms.
+Below tagline (appear 2s delay, fade-in):
+"Artha (अर्थ) — Sanskrit for livelihood"
+Font size: 14px, color: rgba(148,163,184,0.6), italic.
+PROGRESS BAR (at bottom of screen):
+Height: 3px, width: 100%.
+Background: rgba(255,255,255,0.1).
+Fill: gradient left to right #7C3AED → #14B8A6.
+Animates from 0% to 100% width over 3 seconds linear.
+═══════════════════════════════════════════════════════════
+PAGE 2: HERO / LANDING (/home)
+═══════════════════════════════════════════════════════════
+SECTION 1: HERO (full viewport height, min-height 100vh)
+Background: #06060F with animated gradient blobs (same as splash).
+LEFT COLUMN (60% width on desktop, full width mobile):
+Top badge (framer motion: fade in + slide up, delay 0):
+Pill shape, border: 1px solid rgba(124,58,237,0.4)
+Background: rgba(124,58,237,0.1)
+Text: "🏆 Guidewire DEVTrails 2026 — Unicorn Chase"
+Font: 13px, purple-light color
+Heading (framer motion: fade in + slide up, delay 0.2s):
+Line 1: "When rain stops" — 56px bold, white
+Line 2: "your work —" — 56px bold, white
+Line 3: "we don't stop your pay." — 56px bold, GRADIENT TEXT
+Mobile: 36px
+Subtext (delay 0.4s):
+"ArthaShield is India's first AI-powered parametric income insurance for Zepto and Blinkit dark-store riders. Rain, smog, or curfew — 60 seconds to your UPI. Zero forms. Zero calls."
+Font: 18px, color: #94A3B8, max-width 500px, line-height 1.7
+TWO BUTTONS (delay 0.6s, side by side):
+Button 1: "🛡️ Get Protected Free"
+Background: linear-gradient(135deg, #7C3AED, #14B8A6)
+Padding: 16px 32px, border-radius 12px, font-size 16px bold
+Hover: scale(1.05) + box-shadow: var(--glow-purple)
+Click → navigate to /onboard
+Button 2: "▶ See Live Demo"
+Background: transparent
+Border: 1px solid rgba(124,58,237,0.5)
+Padding: 16px 32px, border-radius 12px, font-size 16px
+Hover: border-color purple, background rgba(124,58,237,0.1)
+Click → navigate to /trigger-demo
+RIGHT COLUMN (40% width desktop, hidden mobile):
+Large shield SVG (160px × 190px):
+Same gradient as splash, same floating animation.
+Stronger glow: 0 0 80px rgba(124,58,237,0.5).
+3 floating stat chips orbit the shield:
+Each chip: small pill, glass effect (rgba(13,13,26,0.8) + blur(10px)), border purple.
+Chip 1 — top right of shield:
+"✅ ₹120 paid" — teal text
+Animation: translateY -8px to 8px over 2s infinite alternate
+Chip 2 — left of shield:
+"⚡ 60 seconds" — purple text
+Animation: translateY 8px to -8px over 2.5s infinite alternate, delay 0.5s
+Chip 3 — bottom of shield:
+"📋 Zero forms" — white text
+Animation: translateY -6px to 6px over 3s infinite alternate, delay 1s
+SECTION 2: STATS BAR
+Background: rgba(13,13,26,0.8), border-top and bottom: 1px solid rgba(124,58,237,0.15)
+Padding: 32px 0.
+4 stat items in a row (flex, space-between):
+Each item: center-aligned, no card border.
+Item 1: "₹4.2Cr" large teal number + "protected this week" gray label
+Item 2: "12,400" large purple number + "riders covered" gray label
+Item 3: "60 sec" large teal number + "average payout time" gray label
+Item 4: "99.2%" large purple number + "genuine claims approved" gray label
+All numbers: count up animation when scrolled into view (use Intersection Observer).
+Number font: monospace, 40px, bold.
+SECTION 3: HOW IT WORKS
+Title: "How ArthaShield works" — gradient text, 36px, centered, margin-bottom 48px.
+3 step cards in a row (gap 24px):
+Each card: bg #0D0D1A, border rgba(124,58,237,0.2), border-radius 16px, padding 32px.
+Hover: translateY(-8px) + glow.
+Card 1:
+Icon top: rain emoji in a glowing purple circle (60px, bg rgba(124,58,237,0.2))
+Number badge: "01" top-right, tiny, purple
+Title: "Disruption detected" 20px bold white
+Body: "Our 5-sensor system detects rain, AQI spikes, curfews, or hub failures in real time — at your exact 3km zone." 14px gray
+Card 2:
+Icon: ✅ in teal circle
+Number: "02"
+Title: "Income impact verified"
+Body: "We confirm you were actively working when the disruption hit. Event ≠ Income Loss — we only pay when earning actually stopped."
+Card 3:
+Icon: 💸 in purple circle
+Number: "03"
+Title: "₹120 to your UPI in 60s"
+Body: "Zero forms. Zero calls. The payout reaches your GPay or PhonePe automatically before the rain even stops."
+Connector line between cards (desktop only): dashed line with arrow, purple color.
+SECTION 4: WHAT WE COVER
+Background: slightly different shade #080812.
+Title: "5 disruptions we cover" gradient text, centered.
+Subtitle: "Designed specifically for Zepto and Blinkit dark-store riders. Not food delivery. Not generic." gray, centered.
+5 cards in a 2-3 grid (3 top row, 2 bottom row):
+Each card: same card style, padding 28px.
+Hover: 3D tilt effect using CSS perspective(1000px) rotateX and rotateY based on mouse position.
+Card 1 — Extreme Rainfall:
+Left: rain emoji large, right: content
+Title: "🌧️ Extreme Rainfall" bold white
+Threshold: "> 50mm/hr for 30 minutes" teal badge
+Body: "Riding at 50mm/hr is physically impossible. This is when Zepto suspends zone operations."
+Bottom: "Most common trigger" small tag
+Card 2 — Hazardous AQI:
+Title: "🌫️ Hazardous AQI" bold white
+Badge (orange): "🆕 NEW — not offered anywhere else"
+Threshold: "> 300 AQI for 2 hours" orange badge
+Body: "Covers Diwali smog, Delhi winters, and industrial incidents. No other insurance covers this."
+Card 3 — Civic Curfew:
+Title: "🚫 Civic Curfew / Section 144"
+Threshold: "Zone boundary overlap" red badge
+Body: "Sudden Section 144 events block Ravi's entire delivery zone with zero warning."
+Card 4 — Hub Closure:
+Title: "🏪 Dark Store Closure"
+Badge (purple): "🆕 Unique to Q-Commerce"
+Threshold: "Hub status = OFFLINE"
+Body: "If Ravi's Zepto hub goes offline, he has nowhere to pick up orders — even if roads are clear."
+Card 5 — Route Blockage:
+Title: "🚧 Route Blockage"
+Threshold: "All routes blocked"
+Body: "One flooded underpass blocks Ravi's entire 3km zone. City-level data misses this."
+SECTION 5: COMPARISON TABLE
+Title: "Why ArthaShield is different"
+Two-column layout:
+Left column header: "❌ Generic Insurance" — gray, faded
+Right column header: "✅ ArthaShield" — gradient text, glowing
+8 comparison rows:
+
+City-level triggers | 3km dark-store zone precision
+GPS verification only | 6-signal behavior analysis
+Manual claim filing | Zero-touch automation
+Days to weeks for payout | Under 60 seconds to UPI
+Monthly flat premium | Weekly ML-adjusted pricing
+Weather only | Weather + AQI + Civic + Hub status
+Rejects suspicious claims | Soft Hold — honest workers never denied
+No explanation for pricing | SHAP explains every premium decision
+
+Each row: left side gray with strikethrough, right side white with teal checkmark.
+Alternating row backgrounds for readability.
+Hover: row highlights purple tint.
+SECTION 6: CTA FOOTER
+Background: gradient from #06060F to #0D0D1A.
+Center:
+"Ready to protect your income?" — 36px bold gradient text
+"₹49/week. Cancel anytime. No forms." — gray subtitle
+Large button: "Get Protected Now →" — gradient bg, 56px height, 200px wide
+Small text: "Join 12,400 riders already protected"
+═══════════════════════════════════════════════════════════
+PAGE 3: ONBOARDING (/onboard)
+═══════════════════════════════════════════════════════════
+Full page dark background #06060F.
+Center column, max-width 520px, margin auto.
+TOP PROGRESS BAR:
+Full width, height 4px, background rgba(255,255,255,0.1).
+Filled portion: gradient purple → teal.
+Fills as steps progress: 20% → 40% → 60% → 80% → 100%.
+Above bar: "Step X of 5" in small gray text, right-aligned.
+Each step: framer motion AnimatePresence.
+Exit: slide left + fade out.
+Enter: slide from right + fade in.
+Duration: 0.35s.
+─────────────────────────
+STEP 1: Phone Number
+─────────────────────────
+Title: "Enter your number" — 28px bold gradient text
+Subtitle: "No email. No password. Just your phone." — gray
+Input field:
+Full width, height 56px, bg #0D0D1A, border rgba(124,58,237,0.3)
+Border-radius 12px, font-size 18px, white text, padding-left 60px
+Left prefix: "+91" in a purple box (rounded left, solid bg)
+Placeholder: "98765 43210"
+Focus: border-color purple, glow shadow
+"Send OTP" button:
+Full width, height 52px, gradient bg, border-radius 12px
+Hover: scale(1.02) + glow
+On click:
+
+Button shows spinner for 1.5s
+Toast notification slides in from top-right: "✅ OTP sent to +91 98765 43210"
+4-box OTP input appears below
+Auto-fills "1 2 3 4" after 1s
+"Verify OTP" button appears → goes to Step 2
+
+OTP input: 4 separate single-character boxes, 52px × 52px each, gap 12px, centered.
+Each box: border purple, bg #0D0D1A, text-align center, font-size 24px bold teal.
+Focus: glow purple.
+─────────────────────────
+STEP 2: Select Your Hub
+─────────────────────────
+Title: "Which dark store do you work from?"
+Subtitle: "Your 3km delivery zone is linked to this hub."
+STYLIZED MAP (dark card, 280px height):
+Background: #0D0D1A, border-radius 12px.
+Show a rough SVG India map outline in rgba(255,255,255,0.05).
+5 glowing dots placed approximately where each city is:
+Bangalore dots (top): 2 dots close together (purple, pulsing ring)
+Mumbai dots (right): 2 dots (teal, pulsing ring)
+Labels: tiny city names
+Clicking a dot selects that hub.
+HUB LIST (below map):
+5 hub cards in a scrollable list:
+Each hub card:
+bg #0D0D1A, border rgba(124,58,237,0.2), border-radius 12px, padding 16px
+Flex row: left icon | center info | right premium
+Left: Building emoji or store icon, 40px circle
+Center:
+Hub name bold white 16px — "Zepto Koramangala"
+City gray 14px — "Bangalore, Karnataka"
+Risk badge: colored pill
+HIGH = red pill "🔴 HIGH RISK"
+MEDIUM = amber pill "🟡 MEDIUM RISK"
+LOW = green pill "🟢 LOW RISK"
+EXTREME = red pill "🔴 EXTREME RISK"
+Right:
+Premium amount: large teal monospace "₹49"
+"/week" gray small
+SELECTED STATE:
+border-color: purple bright
+background: rgba(124,58,237,0.08)
+Left border: 4px solid purple
+Checkmark icon appears on right
+IMPORTANT: When hub changes, the premium in Step 4 MUST update.
+Store selected hub in React state that persists across steps.
+Next button: appears only when hub is selected. Full width, gradient.
+─────────────────────────
+STEP 3: Earnings Profile
+─────────────────────────
+Title: "What do you earn per week?"
+Subtitle: "Used to calculate your maximum coverage amount."
+CUSTOM SLIDER:
+Full width, height 8px track.
+Track background: rgba(255,255,255,0.1) with gradient filled portion.
+Thumb: 24px circle, gradient fill, glow on drag, scale(1.2) on active.
+Range: ₹1,000 to ₹10,000, step ₹500.
+Default: ₹4,500.
+LIVE DISPLAY (updates as slider moves, all animated):
+Large number: "₹4,500" — 48px bold teal monospace, center.
+Below: "/week" gray.
+2 calculation cards below (flex row):
+Card 1: "₹3,600" teal + "Max weekly coverage (80%)" gray label
+Card 2: "₹60/hr" purple + "Hourly protection rate" gray label
+Both numbers update live as slider moves.
+Formula: coverage = earnings × 0.8, hourly = (earnings / 60) × 0.8.
+Earnings bracket chips at bottom (clickable shortcuts):
+[₹2,000] [₹3,500] [₹4,500] [₹6,000] [₹8,000]
+Clicking sets slider to that value with animation.
+─────────────────────────
+STEP 4: Choose Plan
+─────────────────────────
+Title: "Your personalised plan"
+Subtitle: "Based on [HUB NAME] — [RISK LEVEL] Risk" (dynamic from Step 2)
+IMPORTANT — DYNAMIC PREMIUM:
+Show "AI-calculated premium for [zone]" with a small info icon.
+The Standard plan premium MUST match the hub selected in Step 2:
+Koramangala → Standard = ₹49
+Whitefield → Standard = ₹28
+HSR Layout → Standard = ₹42
+Kurla → Standard = ₹77
+Andheri → Standard = ₹38
+Basic and Full Cover = Standard × 0.6 and Standard × 1.6 (rounded).
+3 PLAN CARDS (staggered framer motion — each delays 0.1s):
+BASIC card:
+bg #0D0D1A, border rgba(255,255,255,0.1)
+Top: "Basic" 20px bold white
+Price: large monospace, white (calculated)
+Per week label gray
+Features list: 3 items with gray checkmarks
+Bottom: "For part-time riders" tag
+STANDARD card (RECOMMENDED — make this visually BIGGER):
+bg: rgba(124,58,237,0.08)
+border: 2px solid #7C3AED
+box-shadow: 0 0 40px rgba(124,58,237,0.2)
+Top: "RECOMMENDED" badge — gradient text, font 11px
+Title: "Standard" 22px bold gradient text
+Price: large monospace, TEAL color, bigger than others
+Features: 5 items with teal checkmarks
+Bottom note: "Best for Koramangala zone" small teal text
+FULL COVER card:
+bg #0D0D1A, border rgba(124,58,237,0.3)
+Title: "Full Cover"
+Price: purple color
+Features: 6 items
+SELECTED STATE for any card:
+Bright border, scale(1.02), checkmark badge top-right.
+─────────────────────────
+STEP 5: Activate
+─────────────────────────
+Title: "Activate your coverage"
+SUMMARY CARD (glassmorphism):
+Background: rgba(13,13,26,0.6)
+Backdrop-filter: blur(20px)
+Border: 1px solid rgba(255,255,255,0.1)
+Border-radius: 20px, padding: 32px
+Inside:
+Row: "Plan" label | "Standard" value teal
+Row: "Zone" label | "[Selected Hub]" value white
+Row: "Coverage" label | "Today → Sunday midnight" value
+Row: "Max payout" label | "₹900/week" value
+Row: "Weekly cost" label | "₹49" value in teal, bold, large
+Divider line.
+Row: "Payout method" label | "UPI (GPay / PhonePe / BHIM)" value
+UPI BUTTONS (3 in a row):
+Each: rounded card, bg rgba(255,255,255,0.05), border rgba(255,255,255,0.1)
+Show text logos: "G Pay" | "PhonePe" | "BHIM"
+Hover: border white, scale(1.05)
+Clicking one selects it with teal border.
+ACTIVATE BUTTON:
+Full width, height 60px, gradient purple → teal.
+Text: "Pay ₹49 & Activate Coverage"
+Pulse animation on border (like a heartbeat glow).
+Hover: scale(1.02), stronger glow.
+ON CLICK sequence:
+
+Button shows loading spinner + "Processing payment..."
+After 1.5s: FULL SCREEN SUCCESS OVERLAY appears:
+Background: rgba(6,6,15,0.95)
+Center: large animated checkmark (SVG, draws itself with stroke animation)
+Color: teal green
+Text: "You're covered! ✅" — 36px bold gradient
+Subtext: "ArthaShield is active. Ravi, we'll pay you automatically."
+Small: "Redirecting to dashboard..." with dots animation
+Save to localStorage: {loggedIn: true, workerName: "Ravi Kumar", hubId: selectedHub, plan: selectedPlan, earnings: earnings}
+After 2.5s: navigate to /dashboard
+
+═══════════════════════════════════════════════════════════
+PAGE 4: WORKER DASHBOARD (/dashboard)
+═══════════════════════════════════════════════════════════
+If not logged in (no localStorage data): show "Please complete onboarding first" with button to /onboard.
+LAYOUT:
+Desktop: left sidebar 240px + main content
+Mobile: bottom navigation tabs
+SIDEBAR (desktop):
+bg #0D0D1A, full height, border-right rgba(124,58,237,0.2).
+Top: Avatar circle (purple gradient) + "Ravi Kumar" bold + "Zepto Koramangala" gray small.
+Coverage pill: "🟢 ACTIVE" green pulsing dot.
+Nav items (each with icon + label):
+🏠 Dashboard (active = purple bg + left border)
+🛡️ My Coverage
+📋 Claim History
+🔬 Simulate Triggers (link to /trigger-demo)
+⚙️ Settings
+Bottom of sidebar: "Logout" button → clears localStorage → goes to /home.
+MAIN CONTENT:
+TOP BAR:
+"Good morning, Ravi 👋" — 24px bold gradient text
+Right: coverage badge pill "🛡️ ACTIVE — 5 days left" teal glow border
+ALERT CARD (full width, red-tinted):
+bg: rgba(244,63,94,0.08), border: rgba(244,63,94,0.3)
+"⚠️ Heavy rain forecast for Koramangala at 3 PM today"
+"Your coverage is active. Payout will trigger automatically if thresholds are breached."
+Right: "View Simulation →" link
+4 STAT CARDS (2×2 grid, each with framer motion):
+Card 1:
+Icon: 💸 in teal circle
+Number: "₹360" — count up from 0, teal monospace
+Label: "Income protected this week"
+Trend: "+₹120 today" green chip
+Card 2:
+Icon: 🛡️ in purple circle
+Number: "3" — count up
+Label: "Payouts received"
+Trend: "this week" gray
+Card 3:
+Icon: ⚡ in gold circle
+Number: "60" — count up
+Label: "Avg seconds to payout"
+Trend: "industry best" green chip
+Card 4:
+Icon: 📅 in blue circle
+Number: "5" — count up
+Label: "Days remaining"
+Trend: "Renews Sunday" gray
+ZONE MAP CARD (full width):
+Title: "Your 3km protection zone — Koramangala, Bangalore"
+Dark card, padding 24px.
+Inside: SVG circle visualization.
+Outer ring: dashed circle, rgba(124,58,237,0.2), radius 120px
+Pulsing rings: 3 concentric circles animating outward (sonar effect)
+Each ring: opacity 0.4 → 0, scale 0.3 → 1, duration 2s, staggered
+Color: purple
+Center dot: solid purple circle 12px with bright glow
+Label inside: "Zepto Koramangala Hub"
+Label around outer ring: "3km radius" with arrow
+6 small delivery dots scattered in the zone (representing riders)
+Right side: coverage status chips
+🌧️ Rain coverage — ACTIVE ✅
+🌫️ AQI coverage — ACTIVE ✅
+🚫 Curfew coverage — ACTIVE ✅
+🏪 Hub closure — ACTIVE ✅
+🚧 Route blockage — ACTIVE ✅
+RECENT PAYOUTS (full width):
+Title: "Recent payouts" + "See all →" link right
+List of payout rows:
+Each row (framer motion stagger, slide in from left):
+bg #0D0D1A, border-left 4px solid (teal for paid, amber for hold)
+Border-radius 12px, padding 16px, margin-bottom 8px.
+Flex row:
+LEFT: emoji icon in colored circle (52px)
+CENTER:
+Title: "Rain disruption — Koramangala" bold white 15px
+Subtitle: "Today at 3:02 PM · Fraud score: 0.12 (Clean)" gray 13px
+Status badge: "PAID" green pill OR "SOFT HOLD" amber pill
+RIGHT:
+Amount: "+₹120" teal monospace 22px bold
+"Credited to UPI" gray 12px
+4 rows:
+
+🌧️ Rain — Today 3:02 PM — PAID — +₹120
+🌫️ AQI Spike — Yesterday 11:15 AM — PAID — +₹60
+🚧 Route Block — 3 days ago — PAID — +₹180
+🏪 Hub Closure — 5 days ago — SOFT HOLD — +₹180
+
+PREMIUM BREAKDOWN CARD:
+Title: "Why your premium is ₹49"
+SHAP-style explanation:
+Base rate: ₹35 +₹35
+Zone risk (Koramangala 1.4×): +₹14 red bar
+Season (peak monsoon 1.3×): +₹5 red bar
+Loyalty discount (0 claims): -₹5 green bar
+Final: ₹49/week teal bold
+Horizontal bar chart showing each factor. Bars animate width on load.
+Small note: "Calculated by XGBoost AI model using zone flood history, AQI data, and elevation"
+═══════════════════════════════════════════════════════════
+PAGE 5: TRIGGER SIMULATION (/trigger-demo)
+═══════════════════════════════════════════════════════════
+THIS IS THE MOST IMPORTANT PAGE. Make it dramatic.
+Header:
+Title: "🔬 Live Trigger Simulation" — 32px bold gradient
+Subtitle: "Simulate real disruption events and watch ArthaShield's AI respond in real time"
+Note badge: "All simulations use real API logic. Payouts go to demo wallet." gray pill.
+CURRENT CONDITIONS ROW (before simulations):
+3 live-looking metric cards:
+"🌧️ Current Rain: 12mm/hr — Normal" green
+"🌫️ AQI Index: 142 — Moderate" amber
+"🏪 Hub Status: ONLINE" green
+These will update when triggers are fired.
+5 TRIGGER CARDS (layout: 2 columns top, 2 middle, 1 bottom centered):
+─────────────────────────
+RAIN TRIGGER CARD
+─────────────────────────
+bg #0D0D1A, border rgba(59,130,246,0.3), border-radius 16px, padding 24px.
+Hover: border rgba(59,130,246,0.7), glow 0 0 30px rgba(59,130,246,0.2).
+Header: "🌧️ Heavy Rainfall" bold white + "Most Common" small green badge
+Threshold: "> 50mm/hr for 30 minutes" — small info row, blue bg pill
+Current: "12mm/hr — Normal 🟢" — updated dynamically
+GAUGE VISUALIZATION:
+Circular arc gauge (use SVG):
+Background arc: rgba(255,255,255,0.1), stroke-width 8
+Fill arc: blue, stroke-width 8, stroke-dasharray animated
+Center: current value large text
+Threshold marker at 50mm
+When firing: fills past threshold, color turns red
+Button: "🌧️ Trigger Rainstorm" — blue gradient, full width, 48px height.
+Hover: glow blue, scale 1.02.
+ON CLICK — 4-STEP SEQUENCE:
+Disable button immediately, show "Simulating..." state.
+Step 1 (0-1s):
+Gauge animates: 12 → 28 → 45 → 55 → 62 mm/hr (smooth count)
+"Current Rain: 62mm/hr — ⚠️ THRESHOLD BREACHED" updates in red
+Alert card appears with shake animation:
+"🔍 Disruption detected — verifying zone level impact"
+Step 2 (1-2s):
+New status card appears with slide-in:
+"📊 Income impact confirmed"
+"Ravi was active on Zepto app. Zero deliveries in past 90 mins."
+Checkmark animates in ✅
+Step 3 (1.5-2.5s):
+"🤖 Running 6-signal fraud analysis..."
+Fraud score meter animates from 0 to 0.12 (circular progress)
+Meter fills green (< 0.3)
+"Score: 0.12 — CLEAN ✅" appears
+Step 4 (2.5s): PAYOUT FIRES
+FULL SCREEN OVERLAY (framer motion AnimatePresence):
+Background: rgba(6,6,15,0.92)
+Center: pulsing teal glow circle expanding outward (3 rings)
+Large text: "+₹120" — animate scale from 0.5 to 1.2 then settle at 1, teal monospace huge
+Below: "Credited to Ravi Kumar's UPI"
+Below: "GPay • ****9999"
+Small: "Transaction ID: AS-2026-00847"
+Dismiss after 3s automatically OR tap to dismiss
+After overlay:
+New payout row slides into the payouts feed with green flash
+Button re-enables with "Trigger Again" state
+─────────────────────────
+AQI TRIGGER CARD
+─────────────────────────
+bg #0D0D1A, border rgba(245,158,11,0.3) (amber/smog color)
+Header: "🌫️ Hazardous AQI" + "🆕 Unique Feature" badge (purple)
+Threshold: "> 300 AQI for 2 hours"
+Current: "AQI 142 — Moderate 🟡"
+Gauge: amber colored arc
+Button: "🌫️ Trigger AQI Emergency" — amber gradient
+ON CLICK:
+Same 4-step sequence, AQI climbs: 142 → 198 → 267 → 312
+Payout: +₹60
+─────────────────────────
+CURFEW TRIGGER CARD
+─────────────────────────
+border rgba(244,63,94,0.3) (red)
+Header: "🚫 Section 144 / Curfew"
+Threshold: "Zone boundary overlap"
+Visual: small zone map silhouette
+Button: "🚫 Impose Curfew" — red gradient
+ON CLICK:
+Zone map flashes red, "RESTRICTED ZONE" text appears
+Step sequence → payout ₹240
+─────────────────────────
+HUB CLOSURE CARD
+─────────────────────────
+border rgba(124,58,237,0.3) (purple)
+Header: "🏪 Dark Store Offline" + "🆕 Q-Commerce Only" badge
+Current status: "Hub Status: ONLINE 🟢"
+Button: "🏪 Take Hub Offline" — purple gradient
+ON CLICK:
+Status flips to "Hub Status: OFFLINE 🔴" with red flash
+Step sequence → payout ₹180
+─────────────────────────
+SOFT HOLD DEMO CARD
+─────────────────────────
+border rgba(245,158,11,0.3) (amber)
+Header: "🔍 Suspicious Claim Simulation"
+Subtitle: "Fraud score > 0.3 → Soft Hold activated (not rejected)"
+Button: "🔍 Trigger with Fraud Signals" — amber gradient
+ON CLICK:
+Fraud score meter climbs to 0.65 (amber)
+"SOFT HOLD activated — payout held, not rejected"
+Timer countdown appears: "Auto-approving in: 5s 4s 3s 2s 1s"
+After countdown: "✅ Auto-approved — signals stabilized. ₹240 credited."
+Show notification: "Ravi was never rejected. Honest workers always protected."
+PAYOUTS FEED (below trigger cards):
+Title: "Simulation payouts this session"
+Empty state initially: "Fire a trigger above to see payouts appear here"
+As triggers fire, new payout rows animate in (slide + fade)
+Each row same style as dashboard payouts feed
+═══════════════════════════════════════════════════════════
+PAGE 6: ADMIN DASHBOARD (/admin)
+═══════════════════════════════════════════════════════════
+Title: "ArthaShield — Insurer Command Center"
+Subtitle: "Real-time risk intelligence and payout management"
+LAYOUT: full width, sections stacked vertically.
+TOP STATS (4 cards, framer motion stagger):
+Card 1: "₹4.2Cr" teal — "Total protected this week" — trend: "+12% vs last week"
+Card 2: "12,400" purple — "Active policies" — trend: "+340 today"
+Card 3: "98.7%" green — "Genuine claim approval rate" — trend: "↑ 0.3%"
+Card 4: "₹49" gold — "Average weekly premium" — trend: "stable"
+INDIA ZONE MAP CARD:
+Title: "Live zone risk intelligence"
+Dark card with SVG India outline (simplified, just the shape):
+Background: #0D0D1A
+India border: rgba(255,255,255,0.1), stroke-width 1
+5 zone dots placed geographically:
+Bangalore (bottom):
+Koramangala dot: 16px, red, pulsing ring animation, label "Koramangala 🔴 HIGH ₹49"
+Whitefield dot: 10px, green, label "Whitefield 🟢 LOW ₹28"
+Mumbai (right):
+Kurla dot: 20px, dark red, larger pulse, label "Kurla 🔴 EXTREME ₹77"
+Andheri dot: 12px, amber, label "Andheri 🟡 MED ₹38"
+Hyderabad (center):
+Coming soon dot: 8px, gray dashed, label "Hyderabad — Soon"
+Hover on each dot: tooltip card appears with:
+Zone name, risk level, active policies, this week payouts, fraud rate.
+CLAIMS TABLE:
+Title: "All claims — live view"
+Search input: "Search by worker ID or zone..."
+Filter pills: All | Paid | Soft Hold | Manual Review | Rejected
+Table:
+Dark header row: Worker | Zone | Trigger | Amount | Fraud Score | Status | Action
+Rows: alternating #0D0D1A and slightly lighter.
+Hover row: purple tint.
+8 data rows with varied statuses.
+Fraud score column: colored progress bar (0-100% of 1.0)
+Green bar < 0.3
+Amber bar 0.3-0.7
+Red bar > 0.7
+Status column: colored pill badges
+Action column: "Approve" teal button | "Reject" coral button (for manual review rows)
+FRAUD QUEUE:
+Title: "🚨 Fraud queue — 2 claims need review"
+Red pulsing dot next to title.
+2 flagged claim cards:
+Each card: amber border, padding 20px.
+Top: worker info + fraud score badge (large, red "0.71 HIGH RISK")
+Middle: "Flagged signals:" list:
+❌ GPS decimal precision mismatch (spoofed coordinates detected)
+❌ 3 workers within 200m filed simultaneously
+❌ Delivery app was in background (not active)
+✅ Accelerometer consistent with riding
+Bottom: "Approve" + "Reject" buttons + "More Info" gray link.
+ANALYTICS CHART:
+Title: "Payout trends + next week forecast"
+Subtitle: "Koramangala zone — AI predicts 72% probability of 2+ trigger events next week"
+Recharts LineChart:
+X-axis: Mon Tue Wed Thu Fri Sat Sun (this week) + next week dotted
+Y-axis: Payout amount ₹
+Line 1: This week actuals — solid teal line
+Line 2: Next week forecast — dotted purple line
+Area fill under actual line: teal with low opacity
+Tooltip: shows date + amount on hover
+═══════════════════════════════════════════════════════════
+GLOBAL STATE MANAGEMENT
+═══════════════════════════════════════════════════════════
+Use React Context or simple localStorage for:
+USER STATE:
+{
+loggedIn: boolean,
+workerName: string,      // "Ravi Kumar"
+hubId: number,           // 1-5
+hubName: string,         // "Zepto Koramangala"
+weeklyEarnings: number,  // 4500
+planTier: string,        // "STANDARD"
+weeklyPremium: number,   // 49
+coverageStart: string,   // ISO date
+coverageEnd: string      // ISO date (7 days later)
+}
+SIMULATION STATE (in memory, not localStorage):
+{
+payouts: [],             // grows as triggers fire
+totalProtected: number,  // sum of paid payouts
+sessionClaims: []        // claims in this session
+}
+NAVIGATION RULES:
+
+/dashboard: redirect to /onboard if not loggedIn
+/onboard: redirect to /dashboard if already loggedIn
+/trigger-demo: accessible always (shows demo mode if not logged in)
+/admin: accessible always
+
+═══════════════════════════════════════════════════════════
+MOCK DATA FILE (src/data/mockData.js)
+═══════════════════════════════════════════════════════════
+export const HUBS = [
+{ id: 1, name: "Zepto Koramangala", city: "Bangalore", riskLevel: "HIGH", multiplier: 1.4, premium: 49, lat: 12.9352, lng: 77.6245 },
+{ id: 2, name: "Zepto HSR Layout", city: "Bangalore", riskLevel: "MEDIUM", multiplier: 1.2, premium: 42, lat: 12.9116, lng: 77.6473 },
+{ id: 3, name: "Zepto Whitefield", city: "Bangalore", riskLevel: "LOW", multiplier: 0.8, premium: 28, lat: 12.9698, lng: 77.7500 },
+{ id: 4, name: "Blinkit Kurla", city: "Mumbai", riskLevel: "EXTREME", multiplier: 2.2, premium: 77, lat: 19.0728, lng: 72.8826 },
+{ id: 5, name: "Zepto Andheri", city: "Mumbai", riskLevel: "MEDIUM", multiplier: 1.1, premium: 38, lat: 19.1136, lng: 72.8697 },
+];
+export const PLAN_TIERS = {
+BASIC: { name: "Basic", multiplier: 0.6, maxDay: 150, maxWeek: 450 },
+STANDARD: { name: "Standard", multiplier: 1.0, maxDay: 300, maxWeek: 900 },
+FULL: { name: "Full Cover", multiplier: 1.6, maxDay: 500, maxWeek: 1500 },
+};
+export const DEMO_CLAIMS = [
+{ id: 1, type: "RAINFALL", emoji: "🌧️", label: "Rain disruption", zone: "Koramangala", amount: 120, fraudScore: 0.12, status: "PAID", time: "Today 3:02 PM" },
+{ id: 2, type: "AQI", emoji: "🌫️", label: "AQI spike", zone: "Koramangala", amount: 60, fraudScore: 0.08, status: "PAID", time: "Yesterday 11:15 AM" },
+{ id: 3, type: "ROUTE_BLOCK", emoji: "🚧", label: "Route blockage", zone: "Koramangala", amount: 180, fraudScore: 0.15, status: "PAID", time: "3 days ago" },
+{ id: 4, type: "HUB_CLOSURE", emoji: "🏪", label: "Hub closure", zone: "Koramangala", amount: 180, fraudScore: 0.61, status: "PAID", time: "5 days ago" },
+];
+export const ADMIN_CLAIMS = [
+{ id: 1, worker: "RK-0091", zone: "Koramangala", trigger: "Rainfall", amount: 120, fraudScore: 0.12, status: "PAID" },
+{ id: 2, worker: "NG-0045", zone: "HSR Layout", trigger: "AQI", amount: 60, fraudScore: 0.09, status: "PAID" },
+{ id: 3, worker: "VK-0233", zone: "Kurla", trigger: "Curfew", amount: 240, fraudScore: 0.71, status: "MANUAL_REVIEW" },
+{ id: 4, worker: "AM-0189", zone: "Whitefield", trigger: "Rainfall", amount: 120, fraudScore: 0.58, status: "SOFT_HOLD" },
+{ id: 5, worker: "RS-0312", zone: "Andheri", trigger: "Hub Closure", amount: 180, fraudScore: 0.11, status: "PAID" },
+{ id: 6, worker: "PD-0078", zone: "Koramangala", trigger: "Route Block", amount: 180, fraudScore: 0.68, status: "MANUAL_REVIEW" },
+{ id: 7, worker: "SK-0445", zone: "Kurla", trigger: "AQI", amount: 60, fraudScore: 0.14, status: "PAID" },
+{ id: 8, worker: "MK-0567", zone: "HSR Layout", trigger: "Rainfall", amount: 120, fraudScore: 0.22, status: "PAID" },
+];
+═══════════════
+
+FINAL CHECKLIST — VERIFY BEFORE SUBMITTING
+═══════════════════════════════════════════════════════════
+□ Splash screen shows and auto-redirects
+□ Hero page has animated stats, 3D shield, floating chips
+□ Onboarding: all 5 steps work with animations
+□ Hub selection changes the premium in Step 4 (Koramangala ₹49 vs Whitefield ₹28)
+□ Activation shows celebration animation
+□ Dashboard shows real data from localStorage
+□ Dashboard has working logout button
+□ All 5 trigger simulations work with 4-step sequences
+□ Payout overlay appears for each successful trigger
+□ Soft Hold demo shows countdown + auto-approve
+□ Admin dashboard shows charts, table, fraud queue
+□ Navbar appears on every page with correct active state
+□ Navbar shows logged-in state after onboarding
+□ Mobile layout works (test at 375px width)
+□ No white backgrounds anywhere
+□ All headings use gradient text
+□ All numbers count up when appearing
